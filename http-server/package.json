@@ -1,0 +1,13 @@
+{
+    "name": "dns_poisoning",
+    "version": "1.0.0",
+    "description": "Dummy node web server",
+    "author": "dns_poisoning",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    }
+}

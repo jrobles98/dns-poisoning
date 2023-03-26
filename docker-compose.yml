@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  dns_server:
+    image: dnsspoofing_dns_server:latest
+    networks:
+      dnsspoofing_network:
+        ipv4_address: 172.20.42.5
+    ports: 
+      - 53:53/udp
+      - 53:53/tcp
+  http_server:
+    image: dnsspoofing_http_server:latest
+    networks:
+      dnsspoofing_network:
+        ipv4_address: 172.20.42.2
+    dns: 
+      - 172.20.42.5
+      - 8.8.8.8
+    ports: 
+      - 80:80/udp
+      - 80:80/tcp
+      - 443:443/udp
+      - 443:443/tcp
+
+networks:
+  dnsspoofing_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.42.0/24"

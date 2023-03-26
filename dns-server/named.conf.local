@@ -1,0 +1,5 @@
+
+zone "dummyendpoint.com" {
+    type master;
+    file "/etc/bind/zones/db.dummyendpoint.com";
+};
