@@ -5,7 +5,7 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 <br/><br/>
 </h1>
 
-<p align="center">This repository contains information and code related to the tools and techniques used for the Part 1 of the investigation of a possible vulnerability on trading bots authentication methods and their possible breaches.</p>
+<p align="center">This repository contains information and code related to the tools and techniques used for the Part 1 of the investigation of a possible vulnerability on <b>trading bots authentication methods and their possible breaches</b>.</p>
 
 <p align="center">
   <a href="#tools-used-">Tools Used 🧰 </a> •
@@ -86,11 +86,11 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 
 <p align="justify">The Docker Compose file orchestrates both services, DNS and HTTP server. We customized the networks, addresses, and explicitly exposed ports.</p>
 
-<p align="justify">We connect containers through the creation of `dnsspoofing_network` and match addresses with **Bind9** DNS server configuration files. We also point to a preferred subnet to circumvent and identify possible failure areas.</p>
+<p align="justify">We connect containers through the creation of `dnsspoofing_network` and match addresses with <b>Bind9</b> DNS server configuration files. We also point to a preferred subnet to circumvent and identify possible failure areas.</p>
 
 #### DNS Server
 
-<p align="justify">We used an open source **Bind9 DNS Server** for our investigation. To configure the server, we used the following files:</p>
+<p align="justify">We used an open source <b>Bind9 DNS Server</b> for our investigation. To configure the server, we used the following files:</p>
 
 - `named.conf.options`      (for general configuration on DNS behaviour)
 - `named.conf.local`        (to define the zone)
@@ -98,11 +98,11 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 
 <p align="justify">The addresses defined in db.dummyendpoint.com were referred to in the Docker Compose file.</p>
 
-<p align="justify">Regarding the dockerfile, we need to copy, of course, all source data for the configuration and important here: expose UDP port for DNS to work. Lastly, we need to add a loop to maintain the container running.</p>
+<p align="justify">Regarding the dockerfile, we need to copy, of course, all source data for the configuration and important here: <b>expose UDP port for DNS to work</b>. Lastly, we need to add a loop to maintain the container running.</p>
 
 #### HTTP Server
 
-<p align="justify">The HTTP server is a simple Node.js application that applies a **self-signed certificate** to establish an HTTPS connection. It includes a GET dummy call with a simple response. All of this is contained in `server.js`.</p>
+<p align="justify">The HTTP server is a simple Node.js application that applies a <b>self-signed certificate</b> to establish an HTTPS connection. It includes a GET dummy call with a simple response. All of this is contained in `server.js`.</p>
 
 #### DNS Resolutions
 
@@ -122,7 +122,7 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 
 ## Corpus 📚
 
-<p align="justify">It was brought to our attention a paid trading bot that was been used at that momment and (despite how we thought) this trading bot was using licences that could be remotely issued or revoked. So we started thinking about the concerns of this practice, because implementing a license validation protocol by using a simple API arquitecture could be a very vulnerable security method.
+<p align="justify">It was brought to our attention a paid trading bot that was been used at that momment and (despite how we thought) this trading bot was using <b>licences that could be remotely issued or revoked</b>. So we started thinking about the concerns of this practice, because implementing a license validation protocol by using a simple API arquitecture could be a very vulnerable security method.
 In this case after considering the range of possible vectors, we are only going to focus on the DNS spoofing practice as a way for the attacker to hack and bypass the licensing check system. </p>
 
 <p align="justify">So to start off we tried to capture the traffic between the bot and the "API server", and for this we are going to use Wireshark.
@@ -143,7 +143,7 @@ Let's open it. And there you go!
 
 <div align="center"><img alt="wireshark" src="resources/wireshark-dns-responses-4.png" width="50%"/></div>
 
-<p align="justify">In Queries and Answers tabs you can go and find subtabs named Name and Address. Those are, respectively, the names dns is trying to resolve and matching ip addresses. Wireshark comes with a nice feature to include this into the main output: right click and apply as column. </p>
+<p align="justify">In Queries and Answers tabs you can go and find subtabs named <b>Name and Address</b>. Those are, respectively, the names dns is trying to resolve and matching ip addresses. Wireshark comes with a nice feature to include this into the main output: right click and apply as column. </p>
 
 <div align="center"><img alt="wireshark" src="resources/wireshark-apply-column-5.png" width="50%"/></div>
 
@@ -154,7 +154,7 @@ Let's move on. That was DNS, but it's only the first step. After that, we can in
 
 <div align="center"><img alt="wireshark" src="resources/wireshark-tcp-filter-6.png" width="50%"/></div>
 
-<p align="justify">Immediately, we can identify traces of something surely known: the three way handshake of tcp connection. Each time a tcp connection is made, there is a process in which client and server exchange information to assure proper connection. This includes three steps: </p>
+<p align="justify">Immediately, we can identify traces of something surely known: <b>the three way handshake of tcp connection</b>. Each time a tcp connection is made, there is a process in which client and server exchange information to assure proper connection. This includes three steps: </p>
 
 - Client sends SYN message
 - Server replies SYN/ACK message
@@ -166,7 +166,7 @@ Let's move on. That was DNS, but it's only the first step. After that, we can in
 
 <p align="justify">Another interesting thing is that you can check ACK is repeatedly sent over the lines. That's because of segmentation. If the request is responding with a large amount of data, tcp will slice the packets in needed units and client will reassemble them once they're completely sent. This a basic premise on network traffic. </p>
 
-<p align="justify">TLSv1.2 is also something you can check in the traffic output. This is the upper security layer used by HTTPS nowadays. This basically ensures the encryption. You can find it as DNS in the bottom of the information block at the left bottom.  </p>
+<p align="justify"><b>TLSv1.2 is also something you can check in the traffic output</b>. This is the upper security layer used by HTTPS nowadays. This basically ensures the encryption. You can find it as DNS in the bottom of the information block at the left bottom.  </p>
 
 <div align="center"><img alt="wireshark" src="resources/wireshark-tls-8.png" width="50%"/></div>
 
@@ -204,10 +204,10 @@ Let's move on. That was DNS, but it's only the first step. After that, we can in
 
 <p align="justify">Using the investigation tools and techniques mentioned above, we were able to identify and analyze DNS resolutions, HTTP requests, and API responses. This allowed us to detect any vulnerabilities or issues with the system and take appropriate action to address them.</p>
 
-<p align="justify">We first took off from investigation and information collection: first step is knowing the target. Details, resources, methods, protocols, request, responses, headers. Whatever it comes, whatever is welcomed. For this first phase, we got involved into Wireshark, Fiddler and Postman.
-Secondly, we build the simple infrastructure that let us recreate our own safe playground or environment. Then we can fit and assemble all the puzzle pieces into something bigger and functional.</p>
+<p align="justify">We first <b>took off from investigation and information collection</b>: first step is knowing the target. Details, resources, methods, protocols, request, responses, headers. Whatever it comes, whatever is welcomed. For this first phase, we got involved into Wireshark, Fiddler and Postman.
+Secondly, <b>we built the simple infrastructure that let us recreate our own safe playground or environment</b>. Then we can fit and assemble all the puzzle pieces into something bigger and functional.</p>
 
-<p align="justify">And all of that drew the pathway to consolidation of information and potential attack vectors.</p>
+<p align="justify">And all of that <b>drew the pathway to consolidation of information and potential attack vectors.</b></p>
 
 **[⬆️ Back to Top](#an-investigation-of-dns-resolution-and-web-traffic-inspection-over-trading-bots-risks-and-potential-vulnerabilities-part-i)**
 
