@@ -86,7 +86,7 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 
 <p align="justify">The Docker Compose file orchestrates both services, DNS and HTTP server. We customized the networks, addresses, and explicitly exposed ports.</p>
 
-<p align="justify">We connect containers through the creation of `dnsspoofing_network` and match addresses with <b>Bind9</b> DNS server configuration files. We also point to a preferred subnet to circumvent and identify possible failure areas.</p>
+<p align="justify">We connect containers through the creation of <code>dnsspoofing_network</code> and match addresses with <b>Bind9</b> DNS server configuration files. We also point to a preferred subnet to circumvent and identify possible failure areas.</p>
 
 #### DNS Server
 
@@ -102,11 +102,11 @@ An investigation of DNS resolution and web traffic inspection over trading bots.
 
 #### HTTP Server
 
-<p align="justify">The HTTP server is a simple Node.js application that applies a <b>self-signed certificate</b> to establish an HTTPS connection. It includes a GET dummy call with a simple response. All of this is contained in `server.js`.</p>
+<p align="justify">The HTTP server is a simple Node.js application that applies a <b>self-signed certificate</b> to establish an HTTPS connection. It includes a GET dummy call with a simple response. All of this is contained in <code>server.js</code>.</p>
 
 #### DNS Resolutions
 
-<p align="justify">To successfully trigger DNS resolution, we recommend flushing the DNS cache memory in the device with `ipconfig /flushdns`. This way, we allow Wireshark to identify and show all the captures regarding DNS resolution.</p>
+<p align="justify">To successfully trigger DNS resolution, we recommend flushing the DNS cache memory in the device with <code>ipconfig /flushdns</code>. This way, we allow Wireshark to identify and show all the captures regarding DNS resolution.</p>
 
 #### Fiddler Investigation
 
